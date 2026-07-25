@@ -1,0 +1,29 @@
+[tool.ruff]
+line-length = 80
+
+# Target Python version
+target-version = "py314"
+
+[tool.ruff.lint]
+
+[tool.ruff.format]
+# Customize formatting preferences (defaults mirror Black)
+quote-style = "double"
+indent-style = "space"
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mkbuild"
+version = "0.1.0"
+description = "A build system scripting service"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = []
+
+[dependency-groups]
+dev = [
+    "ruff>=0.16.0",
+]
