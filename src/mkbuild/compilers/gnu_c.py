@@ -3,7 +3,7 @@ from mkbuild.utils import run_silent
 
 
 class GNU_C(Compiler):
-    """The GNU C Compiler implementation."""
+    """An abstract class to describe some of the features of GCC."""
 
     @property
     def compiler(self) -> str:

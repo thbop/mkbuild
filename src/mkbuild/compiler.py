@@ -8,13 +8,31 @@ class Compiler(ABC):
 
     @property
     @abstractmethod
-    def compiler(self) -> str:
+    def source_extension(self) -> str:
+        """The source extension.
+
+        For example: ".c"
+        """
+        pass
+
+    @property
+    @abstractmethod
+    def target_extension(self) -> str:
+        """The target extension.
+
+        For example: ".o"
+        """
+        pass
+
+    @property
+    @abstractmethod
+    def command(self) -> str:
         """The command to compile.
 
         Example:
         ```
         @property
-        def compiler(self) -> str:
+        def command(self) -> str:
             return "gcc"
         ```
 

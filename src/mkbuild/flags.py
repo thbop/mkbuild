@@ -7,8 +7,8 @@ from mkbuild.exceptions import MKUnsupportedOS
 class Flags(ABC):
     """An abstract class to represent various flags compilers and linkers."""
 
-    @abstractmethod
     @property
+    @abstractmethod
     def get(self) -> str:
         """Gets the default compiler/linker flags."""
         pass
@@ -17,14 +17,14 @@ class Flags(ABC):
 class OSFlags(Flags):
     """An abstract flags class that is discriminates based off platform."""
 
-    @abstractmethod
     @property
+    @abstractmethod
     def windows(self) -> str:
         """The default flags for windows."""
         pass
 
-    @abstractmethod
     @property
+    @abstractmethod
     def linux(self) -> str:
         """The default flags for linux."""
         pass
