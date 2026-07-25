@@ -1,11 +1,16 @@
 [[repos]]
 repo = "https://github.com/astral-sh/ruff-pre-commit"
-rev = "v0.16.0" # Use the latest version tag of ruff-pre-commit
+rev = "v0.16.0"
 
 hooks = [
-  # 1. Run the linter (and automatically fix safe issues)
   { id = "ruff-check", args = ["--fix"] },
   
-  # 2. Run the code formatter
   { id = "ruff-format" }
+]
+
+[[repos]]
+repo = "https://github.com/astral-sh/ty-pre-commit"
+rev = "v0.0.61"
+hooks = [
+  { id = "ty" }
 ]

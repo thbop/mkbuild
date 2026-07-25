@@ -4,6 +4,7 @@ import os
 import platform
 import subprocess
 import sys
+from pathlib import Path
 
 
 def run_silent(*args) -> subprocess.CompletedProcess:
@@ -58,7 +59,7 @@ def dump_hashes(hashes: dict):
 
 def get_new_hashes_and_changed_sources(
     hashes: dict, sources: list[str]
-) -> tuple[dict, list[dir]]:
+) -> tuple[dict, list[str]]:
     new_hashes = {src: hashfile(src) for src in sources}
     changed_sources = []
     for src, value in new_hashes.items():
@@ -101,10 +102,10 @@ elif TARGET_OS == "Linux":
 
 SOURCES = []
 for root, _, files in os.walk(SRC_DIR):
-    SOURCES += [os.path.join(root, file) for file in files]
+    SOURCES += [Path(root, file) for file in files]
 
 OBJECTS = [
-    os.path.join(BIN_DIR, get_identifier_no_extension(src) + ".o")
+    str(Path(BIN_DIR, get_identifier_no_extension(src) + ".o"))
     for src in SOURCES
 ]
 
