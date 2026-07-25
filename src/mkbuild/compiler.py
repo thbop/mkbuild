@@ -1,5 +1,7 @@
 from abc import ABC, abstractmethod
 
+from mkbuild.flags import Flags
+
 
 class Compiler(ABC):
     """Abstract class that describes the properties of a compiler."""
@@ -17,6 +19,12 @@ class Compiler(ABC):
         ```
 
         """
+        pass
+
+    @property
+    @abstractmethod
+    def flags(self) -> Flags:
+        """The default flags provided for compiling."""
         pass
 
     def preprocess(self, filename: str) -> str:

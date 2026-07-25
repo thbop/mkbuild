@@ -10,6 +10,10 @@ select = [
   "D", # Enable docstring checks
 ]
 
+extend-select = [
+  "SLF", # flake8-self (private-member-access)
+]
+
 ignore = [
   "D100", # Missing docstring in public module
   "D104", # Missing docstring in public package
