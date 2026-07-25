@@ -5,9 +5,21 @@ line-length = 80
 target-version = "py314"
 
 [tool.ruff.lint]
+select = [
+  "E", "F", 
+  "D", # Enable docstring checks
+]
+
+ignore = [
+  "D100", # Missing docstring in public module
+  "D104", # Missing docstring in public package
+  "D107", # Missing docstring in __init__
+]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
 
 [tool.ruff.format]
-# Customize formatting preferences (defaults mirror Black)
 quote-style = "double"
 indent-style = "space"
 
@@ -28,3 +40,4 @@ dev = [
     "ruff>=0.16.0",
     "ty>=0.0.63",
 ]
+
