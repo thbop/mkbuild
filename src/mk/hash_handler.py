@@ -2,10 +2,10 @@ import hashlib
 import json
 from pathlib import Path
 
-from mkbuild.context import Context
-from mkbuild.exceptions import MKInvalidHashHandler
-from mkbuild.sources import Sources
-from mkbuild.transformer import Transformer
+from mk.context import Context
+from mk.exceptions import MKInvalidHashHandler
+from mk.sources import Sources
+from mk.transformer import Transformer
 
 HASH_FILE_NAME = ".mkhashes"
 

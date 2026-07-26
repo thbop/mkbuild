@@ -2,14 +2,14 @@ from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from typing import Generic, TypeVar
 
-from mkbuild.context import Context
-from mkbuild.flags import Flags
+from mk.context import Context
+from mk.flags import Flags
 
 SourceType = TypeVar("SourceType", str, list[str])
 TargetType = TypeVar("TargetType", str, None)
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, kw_only=True)
 class Transformer(ABC, Generic[SourceType, TargetType]):
     """A dataclass that describes the properties of a compiler or a linker."""
 
@@ -18,8 +18,18 @@ class Transformer(ABC, Generic[SourceType, TargetType]):
     SOURCE_EXTENSION: str
     TARGET_EXTENSION: str
 
-    DEBUG_FLAGS: Flags
-    RELEASE_FLAGS: Flags
+    FLAGS: Flags | None
+    DEBUG_FLAGS: Flags | None
+    RELEASE_FLAGS: Flags | None
+
+    def _merge_flags(self, is_release: bool) -> str:
+        flags = self.FLAGS.get() if self.FLAGS else ""
+        flags += (
+            (self.RELEASE_FLAGS.get() if self.RELEASE_FLAGS else "")
+            if is_release
+            else (self.DEBUG_FLAGS.get() if self.DEBUG_FLAGS else "")
+        )
+        return flags
 
     def preprocess(self, source: str) -> bytes:
         """Specify how the transformer preprocesses files.

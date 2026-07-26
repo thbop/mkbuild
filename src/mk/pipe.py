@@ -1,9 +1,9 @@
-from mkbuild.compiler import Compiler
-from mkbuild.context import Context
-from mkbuild.hash_handler import HashHandler
-from mkbuild.linker import Linker
-from mkbuild.sources import Sources
-from mkbuild.transformer import Transformer
+from mk.compiler import Compiler
+from mk.context import Context
+from mk.hash_handler import HashHandler
+from mk.linker import Linker
+from mk.sources import Sources
+from mk.transformer import Transformer
 
 
 class Pipe:

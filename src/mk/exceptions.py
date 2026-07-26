@@ -4,3 +4,7 @@ class MKUnsupportedOS(Exception):
 
 class MKInvalidHashHandler(Exception):
     """The HashHandler class must be used within a with-as block."""
+
+
+class MKInvalidMKName(Exception):
+    """The build script must be named exactly "mk.py"!"""

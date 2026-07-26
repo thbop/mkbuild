@@ -1,18 +1,23 @@
 from dataclasses import dataclass
 
-from mkbuild.compiler import Compiler
-from mkbuild.context import Context
-from mkbuild.utils import run, run_silent
+from mk.compiler import Compiler
+from mk.context import Context
+from mk.flags import Flags
+from mk.utils import run, run_silent
 
 
 @dataclass(frozen=True)
 class GNUCCompiler(Compiler):
     """An abstract dataclass to describe some of the features of GCC."""
 
-    COMMAND = "gcc"
+    COMMAND: str = "gcc"
 
-    SOURCE_EXTENSION = ".c"
-    TARGET_EXTENSION = ".o"
+    SOURCE_EXTENSION: str = ".c"
+    TARGET_EXTENSION: str = ".o"
+
+    FLAGS: Flags = Flags("-std=c23 -Wall -Iinclude")
+    DEBUG_FLAGS: Flags = Flags("-g")
+    RELEASE_FLAGS: Flags = Flags("-O2")
 
     def preprocess(self, source: str) -> bytes:
         """Preprocess for GCC."""
@@ -21,12 +26,11 @@ class GNUCCompiler(Compiler):
 
     def transform(self, ctx: Context, source: str, target: str) -> None:
         """Performs a basic GCC compilation."""
-        flags = self.RELEASE_FLAGS if ctx.IS_RELEASE else self.DEBUG_FLAGS
         run(
             self.COMMAND,
             "-c",
             source,
-            flags.get(),
+            self._merge_flags(ctx.IS_RELEASE),
             "-o",
             target,
         )

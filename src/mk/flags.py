@@ -1,7 +1,7 @@
 import platform
 from dataclasses import dataclass
 
-from mkbuild.exceptions import MKUnsupportedOS
+from mk.exceptions import MKUnsupportedOS
 
 
 @dataclass(frozen=True)

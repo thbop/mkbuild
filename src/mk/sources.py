@@ -2,9 +2,9 @@ import os
 from pathlib import Path
 from typing import Iterator
 
-from mkbuild.context import Context
-from mkbuild.linker import Linker
-from mkbuild.transformer import Transformer
+from mk.context import Context
+from mk.linker import Linker
+from mk.transformer import Transformer
 
 
 class Sources:
