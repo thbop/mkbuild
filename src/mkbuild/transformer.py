@@ -17,7 +17,7 @@ class Transformer(ABC):
     DEBUG_FLAGS: Flags
     RELEASE_FLAGS: Flags
 
-    def preprocess(self, source: str) -> str:
+    def preprocess(self, source: str) -> bytes:
         """Specify how the transformer preprocesses files.
 
         For example, the C preprocesser includes header files.
@@ -27,7 +27,7 @@ class Transformer(ABC):
         Returns:
             The contents of the preprocessed file
         """
-        with open(source) as f:
+        with open(source, "rb") as f:
             return f.read()
 
     @abstractmethod

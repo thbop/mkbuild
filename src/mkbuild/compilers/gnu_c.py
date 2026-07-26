@@ -14,7 +14,7 @@ class GNU_C(Compiler):
     SOURCE_EXTENSION = ".c"
     TARGET_EXTENSION = ".o"
 
-    def preprocess(self, source: str) -> str:
+    def preprocess(self, source: str) -> bytes:
         """Preprocess for GCC."""
         result = run_silent(self.COMMAND, "-E", self.DEBUG_FLAGS.get(), source)
         return result.stdout

@@ -41,7 +41,7 @@ class HashHandler:
 
     def _hashfile(self, filename: str, transformer: Transformer) -> str:
         """Gets the sha256 hash of a preprocessed file."""
-        data = transformer.preprocess(filename).encode()
+        data = transformer.preprocess(filename)
         return hashlib.sha256(data).hexdigest()
 
     def clear(self) -> None:
