@@ -1,6 +1,8 @@
 import hashlib
 import json
 from pathlib import Path
+from types import TracebackType
+from typing import Self
 
 from mk.context import Context
 from mk.exceptions import MKInvalidHashHandler
@@ -18,13 +20,20 @@ class HashHandler:
 
         self._mkhashes_path = Path(self.ctx.BIN_PATH, HASH_FILE_NAME)
 
-    def __enter__(self) -> None:
+    def __enter__(self) -> Self:
         """Loads the hashes file."""
         self._load_hashes()
+        return self
 
-    def __exit__(self) -> None:
+    def __exit__(
+        self,
+        exc_type: type[BaseException] | None,
+        exc_val: BaseException | None,
+        exc_tb: TracebackType | None,
+    ) -> bool | None:
         """Dumps the hashes to the hashes file."""
         self._dump_hashes()
+        return None
 
     def _load_hashes(self) -> None:
         """Loads the hashes file."""
