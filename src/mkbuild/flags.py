@@ -10,7 +10,6 @@ class Flags:
 
     FLAGS: str | None
 
-    @property
     def get(self) -> str:
         """Gets the default compiler/linker flags."""
         return self.FLAGS or ""
@@ -24,7 +23,6 @@ class OSFlags(Flags):
     WINDOWS: str
     LINUX: str
 
-    @property
     def get(self) -> str:
         """Gets the default compiler/linker flags."""
         target_os = platform.system()

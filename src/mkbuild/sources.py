@@ -13,11 +13,11 @@ class Sources:
     def __init__(
         self,
         ctx: Context,
-        collector: Transformer | Linker,
+        transformer: Transformer | Linker,
         sources: list[str] | None = None,
     ) -> None:
         self.ctx = ctx
-        self.collector = collector
+        self.transformer = transformer
         self._sources: list[str] = (
             [
                 filename
@@ -30,7 +30,7 @@ class Sources:
 
     def copywith(self, sources: list[str]) -> Sources:
         """Creates a copy of an existing Sources object but with new sources."""
-        return Sources(self.ctx, self.collector, sources)
+        return Sources(self.ctx, self.transformer, sources)
 
     @property
     def sources(self) -> Iterator[str]:
@@ -45,12 +45,12 @@ class Sources:
         ].__iter__()
 
     def _has_valid_source_extension(self, src: str) -> bool:
-        """Checks if a file path has the collector source extension."""
-        return Path(src).suffix == self.collector.SOURCE_EXTENSION
+        """Checks if a file path has the transformer source extension."""
+        return Path(src).suffix == self.transformer.SOURCE_EXTENSION
 
     def _get_source_with_target_extension(self, src: str) -> str:
         """Replaces a source file extension with the target extension."""
-        return str(Path(src).with_suffix(self.collector.TARGET_EXTENSION))
+        return str(Path(src).with_suffix(self.transformer.TARGET_EXTENSION))
 
     def _read_sources(self) -> list[str]:
         """Walks through the `ctx.SRC_PATH` and collects all sources."""

@@ -16,7 +16,7 @@ class GNU_C(Compiler):
 
     def preprocess(self, source: str) -> str:
         """Preprocess for GCC."""
-        result = run_silent(self.COMMAND, "-E", self.DEBUG_FLAGS.get, source)
+        result = run_silent(self.COMMAND, "-E", self.DEBUG_FLAGS.get(), source)
         return result.stdout
 
     def transform(self, ctx: Context, source: str, target: str) -> None:
@@ -25,7 +25,7 @@ class GNU_C(Compiler):
         run(
             self.COMMAND,
             "-c",
-            flags.get,
+            flags.get(),
             "-o",
             target,
         )

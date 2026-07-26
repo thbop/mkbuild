@@ -39,9 +39,9 @@ class HashHandler:
         with open(self._mkhashes_path, "w") as f:
             json.dump(self._hashes, f)
 
-    def _hashfile(self, filename: str, compiler: Transformer) -> str:
+    def _hashfile(self, filename: str, transformer: Transformer) -> str:
         """Gets the sha256 hash of a preprocessed file."""
-        data = compiler.preprocess(filename).encode()
+        data = transformer.preprocess(filename).encode()
         return hashlib.sha256(data).hexdigest()
 
     def clear(self) -> None:
@@ -56,7 +56,7 @@ class HashHandler:
         if self._hashes is None:
             raise MKInvalidHashHandler()
         new_hashes = {
-            src: self._hashfile(src, sources.collector)
+            src: self._hashfile(src, sources.transformer)
             for src in sources.sources
         }
         self._hashes |= new_hashes
