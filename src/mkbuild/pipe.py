@@ -1,5 +1,7 @@
+from mkbuild.compiler import Compiler
 from mkbuild.context import Context
 from mkbuild.hash_handler import HashHandler
+from mkbuild.linker import Linker
 from mkbuild.sources import Sources
 from mkbuild.transformer import Transformer
 
@@ -26,9 +28,15 @@ class Pipe:
         sources = Sources(self.ctx, self.transformer, raw_sources)
         changed_sources = self.hash_handler.get_changed_sources(sources)
 
-        for source, target in zip(
-            changed_sources.sources, changed_sources.targets
-        ):
-            self.transformer.transform(self.ctx, source, target)
+        if isinstance(self.transformer, Compiler):
+            for source, target in zip(
+                changed_sources.sources, changed_sources.targets
+            ):
+                self.transformer.transform(self.ctx, source, target)
+
+        elif isinstance(self.transformer, Linker):
+            self.transformer.transform(
+                self.ctx, list(changed_sources.sources), None
+            )
 
         return list(sources.targets)

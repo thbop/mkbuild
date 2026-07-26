@@ -1,5 +1,6 @@
 import os
 
+from . import compilers, linkers
 from .compiler import Compiler
 from .context import Context
 from .flags import Flags, OSFlags
@@ -23,4 +24,6 @@ __all__ = [
     "Sources",
     "run",
     "run_silent",
+    "compilers",
+    "linkers",
 ]

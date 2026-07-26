@@ -5,8 +5,8 @@ from mkbuild.context import Context
 from mkbuild.utils import run, run_silent
 
 
-@dataclass
-class GNU_C(Compiler):
+@dataclass(frozen=True)
+class GNUCCompiler(Compiler):
     """An abstract dataclass to describe some of the features of GCC."""
 
     COMMAND = "gcc"
@@ -25,6 +25,7 @@ class GNU_C(Compiler):
         run(
             self.COMMAND,
             "-c",
+            source,
             flags.get(),
             "-o",
             target,

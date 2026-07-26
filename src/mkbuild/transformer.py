@@ -1,12 +1,16 @@
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
+from typing import Generic, TypeVar
 
 from mkbuild.context import Context
 from mkbuild.flags import Flags
 
+SourceType = TypeVar("SourceType", str, list[str])
+TargetType = TypeVar("TargetType", str, None)
 
-@dataclass
-class Transformer(ABC):
+
+@dataclass(frozen=True)
+class Transformer(ABC, Generic[SourceType, TargetType]):
     """A dataclass that describes the properties of a compiler or a linker."""
 
     COMMAND: str
@@ -31,6 +35,8 @@ class Transformer(ABC):
             return f.read()
 
     @abstractmethod
-    def transform(self, ctx: Context, source: str, target: str) -> None:
+    def transform(
+        self, ctx: Context, source: SourceType, target: TargetType
+    ) -> None:
         """Performs the actual compiling/linking."""
         pass

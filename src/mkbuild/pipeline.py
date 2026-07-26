@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from mkbuild.pipe import Pipe
 
 
-@dataclass
+@dataclass(frozen=True)
 class Pipeline:
     """The build pipeline."""
 

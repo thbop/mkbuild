@@ -3,8 +3,8 @@ from dataclasses import dataclass
 from mkbuild.transformer import Transformer
 
 
-@dataclass
-class Linker(Transformer):
+@dataclass(frozen=True)
+class Linker(Transformer[list[str], None]):
     """A dataclass to describe a linker."""
 
-    pass
+    TARGET: str
