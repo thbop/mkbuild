@@ -1,9 +1,9 @@
 from dataclasses import dataclass
 
-from mk.context import Context
-from mk.flags import Flags
-from mk.linker import Linker
-from mk.utils import run
+from mkbuild.context import Context
+from mkbuild.flags import Flags
+from mkbuild.linker import Linker
+from mkbuild.utils import run
 
 
 @dataclass(frozen=True)

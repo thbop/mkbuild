@@ -2,6 +2,17 @@ version = 1
 revision = 3
 requires-python = ">=3.14"
 
+[manifest]
+members = [
+    "gcc",
+    "mkbuild",
+]
+
+[[package]]
+name = "gcc"
+version = "0.1.0"
+source = { virtual = "examples/gcc" }
+
 [[package]]
 name = "mkbuild"
 version = "0.1.0"

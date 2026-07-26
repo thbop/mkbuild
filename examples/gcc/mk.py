@@ -1,4 +1,4 @@
-import mk
+import mkbuild as mk
 
 mk.Pipeline(
     CONTEXT=mk.Context(),

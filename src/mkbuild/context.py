@@ -2,7 +2,7 @@ import sys
 from dataclasses import dataclass
 from pathlib import Path
 
-from mk.hash_handler import HashHandler
+from mkbuild.hash_handler import HashHandler
 
 
 @dataclass
@@ -11,7 +11,8 @@ class Context:
 
     def __post_init__(self) -> None:  # noqa: D105
         Path(self.BIN_PATH).mkdir(parents=True, exist_ok=True)
-        self._hash_handler: HashHandler = HashHandler(self)
+
+        self._hash_handler: HashHandler = HashHandler(self.BIN_PATH)
 
     SRC_PATH: str = "src"
     BIN_PATH: str = "bin"

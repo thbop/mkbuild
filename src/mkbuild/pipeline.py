@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 
-from mk.context import Context
-from mk.pipe import Pipe
+from mkbuild.context import Context
+from mkbuild.pipe import Pipe
 
 from .transformer import Transformer
 

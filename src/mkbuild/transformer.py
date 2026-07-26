@@ -1,9 +1,11 @@
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from typing import Generic, TypeVar
+from typing import TYPE_CHECKING, Generic, TypeVar
 
-from mk.context import Context
-from mk.flags import Flags
+from mkbuild.flags import Flags
+
+if TYPE_CHECKING:
+    from mkbuild.context import Context
 
 SourceType = TypeVar("SourceType", str, list[str])
 TargetType = TypeVar("TargetType", str, None)
@@ -23,7 +25,7 @@ class Transformer(ABC, Generic[SourceType, TargetType]):
     RELEASE_FLAGS: Flags | None
 
     def _merge_flags(self, is_release: bool) -> str:
-        flags = self.FLAGS.get() if self.FLAGS else ""
+        flags = self.FLAGS.get() + " " if self.FLAGS else ""
         flags += (
             (self.RELEASE_FLAGS.get() if self.RELEASE_FLAGS else "")
             if is_release

@@ -2,7 +2,7 @@ import os
 from pathlib import Path
 
 import __main__
-from mk.exceptions import MKInvalidMKName
+from mkbuild.exceptions import MKInvalidMKName
 
 from . import compilers, linkers
 from .compiler import Compiler

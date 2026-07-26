@@ -31,6 +31,11 @@ convention = "google"
 quote-style = "double"
 indent-style = "space"
 
+[tool.uv.workspace]
+members = [
+    "examples/gcc",
+]
+
 [build-system]
 requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"

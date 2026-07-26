@@ -4,10 +4,9 @@ from pathlib import Path
 from types import TracebackType
 from typing import Self
 
-from mk.context import Context
-from mk.exceptions import MKInvalidHashHandler
-from mk.sources import Sources
-from mk.transformer import Transformer
+from mkbuild.exceptions import MKInvalidHashHandler
+from mkbuild.sources import Sources
+from mkbuild.transformer import Transformer
 
 HASH_FILE_NAME = ".mkhashes"
 
@@ -15,10 +14,9 @@ HASH_FILE_NAME = ".mkhashes"
 class HashHandler:
     """Stores and keeps track of file hashes."""
 
-    def __init__(self, ctx: Context) -> None:
-        self.ctx = ctx
+    def __init__(self, bin_path: str) -> None:
 
-        self._mkhashes_path = Path(self.ctx.BIN_PATH, HASH_FILE_NAME)
+        self._mkhashes_path = Path(bin_path, HASH_FILE_NAME)
 
     def __enter__(self) -> Self:
         """Loads the hashes file."""

@@ -1,9 +1,9 @@
 from dataclasses import dataclass
 
-from mk.compiler import Compiler
-from mk.context import Context
-from mk.flags import Flags
-from mk.utils import run, run_silent
+from mkbuild.compiler import Compiler
+from mkbuild.context import Context
+from mkbuild.flags import Flags
+from mkbuild.utils import run, run_silent
 
 
 @dataclass(frozen=True)

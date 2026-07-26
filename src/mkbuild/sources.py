@@ -1,10 +1,12 @@
 import os
 from pathlib import Path
-from typing import Iterator
+from typing import TYPE_CHECKING, Iterator
 
-from mk.context import Context
-from mk.linker import Linker
-from mk.transformer import Transformer
+from mkbuild.linker import Linker
+from mkbuild.transformer import Transformer
+
+if TYPE_CHECKING:
+    from mkbuild.context import Context
 
 
 class Sources:

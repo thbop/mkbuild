@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from mk.transformer import Transformer
+from mkbuild.transformer import Transformer
 
 
 @dataclass(frozen=True, kw_only=True)
