@@ -2,3 +2,9 @@ class MKUnsupportedOS(Exception):
     """The current operating system is not supported or is invalid."""
 
     pass
+
+
+class MKInvalidHashHandler(Exception):
+    """The HashHandler class must be used within a with-as block."""
+
+    pass

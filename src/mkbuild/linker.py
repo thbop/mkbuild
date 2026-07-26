@@ -2,6 +2,6 @@ from mkbuild.compiler import Compiler
 
 
 class Linker(Compiler):
-    """An abstract class to describe a linker."""
+    """A dataclass to describe a linker."""
 
     pass
