@@ -3,7 +3,7 @@ import sys
 
 
 def run_silent(*args: str) -> subprocess.CompletedProcess:
-    """Runs a subprocess silently.
+    """Runs a subprocess silently unless there are errors.
 
     Args:
         args: A tuple of strings
@@ -17,6 +17,10 @@ def run_silent(*args: str) -> subprocess.CompletedProcess:
         cmd += arg.split()
 
     result = subprocess.run(cmd, capture_output=True, text=True, check=False)
+
+    if len(result.stderr) > 0:
+        log("preprocess error!")
+        sys.exit(1)
 
     return result
 

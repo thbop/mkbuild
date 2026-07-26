@@ -17,6 +17,7 @@ class HashHandler:
     def __init__(self, bin_path: str) -> None:
 
         self._mkhashes_path = Path(bin_path, HASH_FILE_NAME)
+        self._hashes: dict[str, str] | None = None
 
     def __enter__(self) -> Self:
         """Loads the hashes file."""
@@ -62,16 +63,29 @@ class HashHandler:
         """Gets the sources that changed since last make."""
         if self._hashes is None:
             raise MKInvalidHashHandler()
-        new_hashes = {
-            src: self._hashfile(src, sources.transformer)
-            for src in sources.sources
-        }
-        self._hashes |= new_hashes
+
+        # new_hashes = {
+        #     src: self._hashfile(src, sources.transformer)
+        #     for src in sources.sources
+        # }
+
+        # changed_sources = []
+        # for src, new_hash in new_hashes.items():
+        #     old_hash = self._hashes.get(src)
+        #     if old_hash != new_hash:
+        #         changed_sources.append(src)
+        #         self._hashes[src] = new_hash
 
         changed_sources = []
-        for src, value in new_hashes.items():
-            if self._hashes.get(src) and value == self._hashes[src]:
-                continue
-            changed_sources.append(src)
+
+        for src in sources.sources:
+            # Resolve path to ensure absolute consistency
+            src_key = str(Path(src).resolve())
+            new_hash = self._hashfile(src, sources.transformer)
+            old_hash = self._hashes.get(src_key)
+
+            if old_hash != new_hash:
+                changed_sources.append(src)
+                self._hashes[src_key] = new_hash
 
         return sources.copywith(changed_sources)

@@ -2,6 +2,7 @@ from dataclasses import dataclass
 
 from mkbuild.context import Context
 from mkbuild.pipe import Pipe
+from mkbuild.utils import log
 
 from .transformer import Transformer
 
@@ -18,5 +19,7 @@ class Pipeline:
         with self.CONTEXT.HASH_HANDLER as hash_handler:
             raw_sources: list[str] | None = None
             for transformer in self.TRANSFORMERS:
-                pipe = Pipe(self.CONTEXT, hash_handler, transformer)
+                pipe = Pipe(hash_handler, transformer)
                 raw_sources = pipe.run(raw_sources)
+
+        log("Done!")

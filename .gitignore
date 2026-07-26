@@ -8,3 +8,10 @@ wheels/
 
 # Virtual environments
 .venv
+
+# GCC Generated files
+*.o
+*.so
+*.dll
+*.elf
+*.exe

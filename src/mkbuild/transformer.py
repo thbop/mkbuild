@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from typing import TYPE_CHECKING, Generic, TypeVar
+from typing import TYPE_CHECKING, Generic, Literal, TypeVar
 
 from mkbuild.flags import Flags
 
@@ -9,13 +9,17 @@ if TYPE_CHECKING:
 
 SourceType = TypeVar("SourceType", str, list[str])
 TargetType = TypeVar("TargetType", str, None)
+AcceptType = Literal["previous", "all", "previous-changed", "changed"]
 
 
 @dataclass(frozen=True, kw_only=True)
 class Transformer(ABC, Generic[SourceType, TargetType]):
     """A dataclass that describes the properties of a compiler or a linker."""
 
+    CTX: Context
     COMMAND: str
+
+    ACCEPT: AcceptType
 
     SOURCE_EXTENSION: str
     TARGET_EXTENSION: str
@@ -47,8 +51,6 @@ class Transformer(ABC, Generic[SourceType, TargetType]):
             return f.read()
 
     @abstractmethod
-    def transform(
-        self, ctx: Context, source: SourceType, target: TargetType
-    ) -> None:
+    def transform(self, source: SourceType, target: TargetType) -> None:
         """Performs the actual compiling/linking."""
         pass

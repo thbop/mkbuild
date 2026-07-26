@@ -8,7 +8,7 @@ from mkbuild.exceptions import MKUnsupportedOS
 class Flags:
     """A dataclass to represent various flags for compilers and linkers."""
 
-    FLAGS: str | None
+    FLAGS: str
 
     def get(self) -> str:
         """Gets the default compiler/linker flags."""
@@ -19,7 +19,6 @@ class Flags:
 class OSFlags(Flags):
     """A dataclass that discriminates flags based off platform."""
 
-    FLAGS = None
     WINDOWS: str
     LINUX: str
 
@@ -28,8 +27,8 @@ class OSFlags(Flags):
         target_os = platform.system()
         match target_os:
             case "Windows":
-                return self.WINDOWS
+                return self.FLAGS + " " + self.WINDOWS
             case "Linux":
-                return self.LINUX
+                return self.FLAGS + " " + self.LINUX
             case _:
                 raise MKUnsupportedOS()
