@@ -2,8 +2,6 @@
 
 A build system scripting service.
 
-NOTE: This project is in alpha.
-
 For example:
 ```py
 import mkbuild as mk
