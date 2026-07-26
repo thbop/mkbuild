@@ -1,49 +1,19 @@
-from abc import ABC, abstractmethod
+from dataclasses import dataclass
 
 from mkbuild.flags import Flags
 
 
-class Compiler(ABC):
-    """Abstract class that describes the properties of a compiler."""
+@dataclass
+class Compiler:
+    """A dataclass that describes the properties of a compiler."""
 
-    @property
-    @abstractmethod
-    def source_extension(self) -> str:
-        """The source extension.
+    COMMAND: str
 
-        For example: ".c"
-        """
-        pass
+    SOURCE_EXTENSION: str
+    TARGET_EXTENSION: str
 
-    @property
-    @abstractmethod
-    def target_extension(self) -> str:
-        """The target extension.
-
-        For example: ".o"
-        """
-        pass
-
-    @property
-    @abstractmethod
-    def command(self) -> str:
-        """The command to compile.
-
-        Example:
-        ```
-        @property
-        def command(self) -> str:
-            return "gcc"
-        ```
-
-        """
-        pass
-
-    @property
-    @abstractmethod
-    def flags(self) -> Flags:
-        """The default flags provided for compiling."""
-        pass
+    DEBUG_FLAGS: Flags
+    RELEASE_FLAGS: Flags
 
     def preprocess(self, filename: str) -> str:
         """Specify how the compiler preprocesses files.
