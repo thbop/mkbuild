@@ -1,3 +1,4 @@
+import sys
 from dataclasses import dataclass
 
 
@@ -7,3 +8,10 @@ class Context:
 
     SRC_PATH: str = "src"
     BIN_PATH: str = "bin"
+
+    @property
+    def IS_RELEASE(self) -> bool:
+        """Checks if the user specified to build for release."""
+        if len(sys.argv) > 1:
+            return sys.argv[1] == "release"
+        return False

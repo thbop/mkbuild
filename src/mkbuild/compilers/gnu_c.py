@@ -1,10 +1,12 @@
-from abc import ABC
+from dataclasses import dataclass
 
 from mkbuild.compiler import Compiler
-from mkbuild.utils import run_silent
+from mkbuild.context import Context
+from mkbuild.utils import run, run_silent
 
 
-class GNU_C(ABC, Compiler):
+@dataclass
+class GNU_C(Compiler):
     """An abstract dataclass to describe some of the features of GCC."""
 
     COMMAND = "gcc"
@@ -12,7 +14,18 @@ class GNU_C(ABC, Compiler):
     SOURCE_EXTENSION = ".c"
     TARGET_EXTENSION = ".o"
 
-    def preprocess(self, filename) -> str:
+    def preprocess(self, source: str) -> str:
         """Preprocess for GCC."""
-        result = run_silent(self.COMMAND, "-E", self.DEBUG_FLAGS, filename)
+        result = run_silent(self.COMMAND, "-E", self.DEBUG_FLAGS.get, source)
         return result.stdout
+
+    def transform(self, ctx: Context, source: str, target: str) -> None:
+        """Performs a basic GCC compilation."""
+        flags = self.RELEASE_FLAGS if ctx.IS_RELEASE else self.DEBUG_FLAGS
+        run(
+            self.COMMAND,
+            "-c",
+            flags.get,
+            "-o",
+            target,
+        )

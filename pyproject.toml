@@ -12,12 +12,16 @@ select = [
 
 extend-select = [
   "SLF", # flake8-self (private-member-access)
+  "ANN", # flake8-annotations: Enforce type annotations on functions
 ]
 
 ignore = [
   "D100", # Missing docstring in public module
   "D104", # Missing docstring in public package
   "D107", # Missing docstring in __init__
+  "ANN101", # Missing type annotation for 'self' in methods
+  "ANN102", # Missing type annotation for 'cls' in classmethods
+  "D417", # Missing argument description in docstring (makes parameter docs optional!)
 ]
 
 [tool.ruff.lint.pydocstyle]

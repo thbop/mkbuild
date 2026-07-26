@@ -2,10 +2,10 @@ import hashlib
 import json
 from pathlib import Path
 
-from mkbuild.compiler import Compiler
 from mkbuild.context import Context
 from mkbuild.exceptions import MKInvalidHashHandler
 from mkbuild.sources import Sources
+from mkbuild.transformer import Transformer
 
 HASH_FILE_NAME = ".mkhashes"
 
@@ -13,16 +13,16 @@ HASH_FILE_NAME = ".mkhashes"
 class HashHandler:
     """Stores and keeps track of file hashes."""
 
-    def __init__(self, ctx: Context):
+    def __init__(self, ctx: Context) -> None:
         self.ctx = ctx
 
         self._mkhashes_path = Path(self.ctx.BIN_PATH, HASH_FILE_NAME)
 
-    def __enter__(self):
+    def __enter__(self) -> None:
         """Loads the hashes file."""
         self._load_hashes()
 
-    def __exit__(self):
+    def __exit__(self) -> None:
         """Dumps the hashes to the hashes file."""
         self._dump_hashes()
 
@@ -34,12 +34,12 @@ class HashHandler:
         except FileNotFoundError:
             self._hashes = {}
 
-    def _dump_hashes(self):
+    def _dump_hashes(self) -> None:
         """Dumps the hashes to the hashes file."""
         with open(self._mkhashes_path, "w") as f:
             json.dump(self._hashes, f)
 
-    def _hashfile(self, filename: str, compiler: Compiler) -> str:
+    def _hashfile(self, filename: str, compiler: Transformer) -> str:
         """Gets the sha256 hash of a preprocessed file."""
         data = compiler.preprocess(filename).encode()
         return hashlib.sha256(data).hexdigest()
@@ -56,7 +56,8 @@ class HashHandler:
         if self._hashes is None:
             raise MKInvalidHashHandler()
         new_hashes = {
-            src: self._hashfile(src, sources.collector) for src in sources
+            src: self._hashfile(src, sources.collector)
+            for src in sources.sources
         }
         self._hashes |= new_hashes
 

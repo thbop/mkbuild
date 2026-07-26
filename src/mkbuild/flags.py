@@ -1,33 +1,28 @@
 import platform
-from abc import ABC, abstractmethod
+from dataclasses import dataclass
 
 from mkbuild.exceptions import MKUnsupportedOS
 
 
-class Flags(ABC):
-    """An abstract class to represent various flags compilers and linkers."""
+@dataclass(frozen=True)
+class Flags:
+    """A dataclass to represent various flags for compilers and linkers."""
+
+    FLAGS: str | None
 
     @property
-    @abstractmethod
     def get(self) -> str:
         """Gets the default compiler/linker flags."""
-        pass
+        return self.FLAGS or ""
 
 
+@dataclass(frozen=True)
 class OSFlags(Flags):
-    """An abstract flags class that is discriminates based off platform."""
+    """A dataclass that discriminates flags based off platform."""
 
-    @property
-    @abstractmethod
-    def windows(self) -> str:
-        """The default flags for windows."""
-        pass
-
-    @property
-    @abstractmethod
-    def linux(self) -> str:
-        """The default flags for linux."""
-        pass
+    FLAGS = None
+    WINDOWS: str
+    LINUX: str
 
     @property
     def get(self) -> str:
@@ -35,8 +30,8 @@ class OSFlags(Flags):
         target_os = platform.system()
         match target_os:
             case "Windows":
-                return self.windows
+                return self.WINDOWS
             case "Linux":
-                return self.linux
+                return self.LINUX
             case _:
                 raise MKUnsupportedOS()

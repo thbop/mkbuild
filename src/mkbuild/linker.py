@@ -1,7 +1,10 @@
-from mkbuild.compiler import Compiler
+from dataclasses import dataclass
+
+from mkbuild.transformer import Transformer
 
 
-class Linker(Compiler):
+@dataclass
+class Linker(Transformer):
     """A dataclass to describe a linker."""
 
     pass
